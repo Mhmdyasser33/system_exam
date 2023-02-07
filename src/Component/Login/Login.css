@@ -1,0 +1,75 @@
+  @import url('https://fonts.googleapis.com/css2?family=Lateef:wght@600;700;800&display=swap');
+  :root{
+      --form_background : #10359d ; 
+      --body_background : #d9d9d9 ; 
+      --btn-color : #fff ;
+    }
+
+  body{
+    background: var(--body_background); 
+    font-family: 'Lateef', serif;
+    direction: rtl ;
+  }
+
+  form {
+      width: 500px;
+      margin: 14% auto;
+      text-align: center;
+      background: var(--form_background) ;
+      padding: 35px ;
+      border-radius: 10px ;
+      box-shadow: 0px 5px 10px rgba(0,0,0,0.7);
+    }
+    
+    form .login {
+      color: var(--btn-color) ;
+      margin-top: -25px ;
+      font-size: 30px ;
+    }
+
+    input[type="password"] {
+      width: 60%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 20px;
+      border: none ;
+      font-size: 18px ;
+      font-family: 'Lateef', serif;
+    }
+
+    input{
+      direction: rtl ;
+    }
+
+    button {
+      width: 20%;
+      border-radius: 5px;
+      border: none;
+      background-color: var(--btn-color) ; 
+      color: var(--form_background) ; 
+      cursor: pointer ;
+      opacity: 1;
+      font-size: 22px ;
+    }
+    
+    label {
+      display: inline-block;
+      width: 30%;
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    .radio_btn_Container{
+      margin: 25px 60px 0 0 ;
+    }
+    
+    .radio_btn_Container label{
+      font-size: 30px ;
+      color: var(--btn-color);
+    }
+
+  form .radio_btn_Container input[type="radio"]{
+      width: 17px;
+      height: 17px;
+      margin-left: 10px;
+  }
