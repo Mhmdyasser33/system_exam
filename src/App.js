@@ -4,17 +4,29 @@ import Login from './Component/Login/Login';
 import Student from './Component/StudentProfile/Student';
 import Admin from './Component/AdminProfile/Admin';
 class App extends Component {
-  // handleSubmit 
-  handleSubmit = () =>{
-    
-  }
+      constructor(props){
+        super(props) ;
+        this.state = {
+       component : 'Login' ,
+       id : '' , 
+       secretNumber : ''
+        };
+      }
+      // handle type 
+      handleType = ( e , id , secretNum)=>{
+      this.setState({
+        component : e ,
+        id : id ,
+        secretNumber : secretNum
+      })
+      }
   render() {
     return (
       <div className="App">
-      <Login />
-      <Student/>
-       <Admin />
-   
+     {this.state.component === 'Login' && <Login handleType={this.handleType}/>}
+     {this.state.component === 'Student' && <Student id={this.state.id} secretNum={this.state.secretNumber}/>}
+     {this.state.component === 'Admin' && <Admin id={this.state.id} secretNum={this.state.secretNumber}/>}
+     
       </div>
     );
   }

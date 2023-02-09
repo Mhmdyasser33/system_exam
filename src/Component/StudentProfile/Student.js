@@ -6,8 +6,8 @@ class Student extends Component{
             <div>
             <header>
                 <div className="container">
-                <p>  الاسم : غير معروف </p>
-                <p>  الرقم القومي : غير معروف  </p>
+                <p>  الاسم : {this.props.id} </p>
+                <p>  الرقم القومي : {this.props.secretNum} </p>
                 <p> الكليه : غير معروف </p>
                 <p> نوع الاداره : غير معروف </p>
                 </div> 

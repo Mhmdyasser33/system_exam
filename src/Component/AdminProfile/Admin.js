@@ -6,9 +6,9 @@ class Admin extends Component{
             <div>
             <header>
                 <div className="container">
-                <p>  الاسم : غير معروف </p>
-                <p>  الرقم القومي : غير معروف  </p>
-                <p> الكليه : غير معروف </p>
+                <p>  الاسم : {this.props.id} </p>
+                <p>  الرقم القومي : {this.props.secretNum} </p>
+                <p> الكليه : حاسبات ومعلومات </p>
                 <p> الرقم الجامعي : غير معروف </p>
                 </div> 
              </header>

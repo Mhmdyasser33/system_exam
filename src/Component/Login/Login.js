@@ -2,12 +2,8 @@
 import React , {Component}  from "react";
 import './Login.css'
 class Login extends Component {
-    state = {
-        isStudent : false 
-    }
     handleSubmit = (e) =>{
         e.preventDefault();
-
         const input1 = document.getElementById("id_input").value ; 
         const input2 = document.getElementById("secretNum_input").value ; 
         if ( !input1 && !input2 ){
@@ -21,28 +17,25 @@ class Login extends Component {
             return ; 
         }
         const selectedUserType = document.querySelector('input[name="user_type"]:checked'); 
-        if (selectedUserType && selectedUserType.value === 'student') {
-            this.fetchStudentData();
+        // last condition to prevent student if he did not entered id or secret num to login 
+        if (selectedUserType && selectedUserType.value === 'student' && input1 !== '' && input2!== '') {
+            this.props.handleType('Student', input1, input2);
           }
+       else if (selectedUserType && selectedUserType.value === 'admin' && input1 !== '' && input2!== '') {
+            this.props.handleType('Admin', input1, input2);
+          }
+          
   }
-  fetchStudentData = () =>{
-   fetch("http://localhost:3000/127.0.0.1:3000/v0/student")
-   .then((response) => {
-    console.log(response);  
-   }
-   ).catch((error) =>{
-    console.log(error) ; 
-   })
-  }
+  
     render(){
-       
+        
         return (
             <form onSubmit={this.handleSubmit} >
                 <h3 className="login"> التسجيل </h3>
                 <input type="password" className="password" id="id_input" placeholder="الرقم القومي "/> 
                 <input type="password" className="password" id="secretNum_input" placeholder="الرقم السري "/>
                 <br></br>
-                <button className="btn" id="btn" onClick={this.fetchStudentData}> تسجيل </button>
+                <button className="btn" id="btn" onClick={this.fetchStudentData} > تسجيل </button>
                 <div className="radio_btn_Container">
                 <input type="radio" name="user_type" id="student" value="student"/>
                 <label for="student"> طالب</label>
