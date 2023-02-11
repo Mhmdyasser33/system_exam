@@ -31,11 +31,15 @@
       width: 60%;
       padding: 10px;
       margin-bottom: 20px;
-      border-radius: 20px;
+      border-radius: 10px;
       border: none ;
       font-size: 18px ;
       font-family: 'Lateef', serif;
-    }
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      -o-border-radius: 10px;
+}
 
     input{
       direction: rtl ;
