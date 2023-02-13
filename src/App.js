@@ -3,8 +3,7 @@ import "./App.css";
 import Login from "./Component/Login/Login";
 import Student from "./Component/StudentProfile/Student";
 import Admin from "./Component/AdminProfile/Admin";
-import axios from "axios";
-
+import {BrowserRouter , Routes , Route} from 'react-router-dom'
 class App extends Component {
   state = {
     component: "Login",
@@ -20,16 +19,9 @@ class App extends Component {
       secretNumber: secretNum,
     });
   }; 
-  // getallStudent 
-  getStudent = () =>{
-    fetch("127.0.0.1:3000/v0/student")
-    .then((response) => response.json())
-    .catch((error) => console.log(error) )
-  }
-  
+
   render() {
     return (
-      
       <div className="App">
         {this.state.component === "Login" && (
           <Login handleType={this.handleType}  />
