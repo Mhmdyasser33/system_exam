@@ -3,14 +3,16 @@ import "./App.css";
 import Login from "./Component/Login/Login";
 import Student from "./Component/StudentProfile/Student";
 import Admin from "./Component/AdminProfile/Admin";
-import {BrowserRouter , Routes , Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom'
+
 class App extends Component {
   state = {
     component: "Login",
     id: "",
     secretNumber: "",
-    data : null ,
+    data: null,
   };
+  
   // handle type
   handleType = (e, id, secretNum) => {
     this.setState({
@@ -22,17 +24,31 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        {this.state.component === "Login" && (
-          <Login handleType={this.handleType}  />
+      <BrowserRouter>
+      <Routes>
+      {this.state.component === "Login" && (
+         <Route path="/login" element={ <Login handleType={this.handleType}  />}/>
         )}
         {this.state.component === "Student" && (
-          <Student id={this.state.id} secretNum={this.state.secretNumber} />
+          <Route path="/student" element={<Student id={this.state.id} secretNum={this.state.secretNumber} />}/>
         )}
         {this.state.component === "Admin" && (
-          <Admin id={this.state.id} secretNum={this.state.secretNumber} />
+        <Route path="/admin" element={<Admin id={this.state.id} secretNum={this.state.secretNumber} />}/>
         )}
-      </div>
+      </Routes>
+      
+      </BrowserRouter>
+       /* <div className="App">
+       {this.state.component === "Login" && (
+         <Login handleType={this.handleType}  />
+       )}
+       {this.state.component === "Student" && (
+         <Student id={this.state.id} secretNum={this.state.secretNumber} />
+       )}
+       {this.state.component === "Admin" && (
+         <Admin id={this.state.id} secretNum={this.state.secretNumber} />
+       )}
+     </div> */
     );
   }
 }

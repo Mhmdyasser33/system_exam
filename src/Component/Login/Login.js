@@ -41,7 +41,7 @@ class Login extends Component {
                 <input type="password" className="password" id="id_input" placeholder="الرقم القومي "/> 
                 <input type="password" className="password" id="secretNum_input" placeholder="الرقم السري "/>
                 <br></br>
-                <button className="btn" id="btn"> تسجيل </button>
+                <button className="btn" id="btn" > تسجيل </button>
                 <div className="radio_btn_Container">
                 <input type="radio" name="user_type" id="student" value="student"/>
                 <label for="student"> طالب</label>
