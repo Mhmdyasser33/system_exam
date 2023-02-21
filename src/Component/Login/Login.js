@@ -11,7 +11,7 @@ class Login extends Component {
         const input2 = document.getElementById("secretNum_input").value ; 
         // check if both inputs are filled 
         if ( !input1 && !input2 ){
-            alert("id and secretNum fields are required!") ;
+            alert("ID and SecretNum fields are required!") ;
         }
         // check if the first input is filled 
         else if (!input1) {

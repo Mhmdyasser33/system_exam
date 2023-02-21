@@ -1,48 +1,62 @@
+// Import necessary modules and libraries
 import React, { Component, Fragment } from "react";
 import "./Admin.css";
 import axios from "axios";
 
-// Admin component to display information about an administrator
+// Define a React component called "Admin"
 class Admin extends Component {
-  // State to store the data fetched from the API
+  // Set the initial state with empty values for "id", "secretNumber", and "data"
   state = {
+    id: "",
+    secretNumber: "",
     data: null,
   };
 
-  // Lifecycle method to fetch the data from the API when the component is first loaded
-  componentDidMount = () => {
-    axios
-      .get("http://127.0.0.1:3000/v0/admin")
-      .then((response) =>
-        this.setState({
-          // Store the data in the state
-          data: response.data[0],
-        })
-      )
-      .catch((error) => console.error(error)); // Log any errors to the console
+  // Handle the form submission when the user clicks the "submit" button
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    // Destructure the "id" and "secretNumber" values from the component's state
+    const { id, secretNumber } = this.state;
+    try {
+      // Send a POST request to the API endpoint with the user's "id" and "secretNumber" values
+      const response = await axios.post(
+        "http://127.0.0.1:3000/v0/admin/login",
+        {
+          id: id,
+          secretNumber: secretNumber,
+        }
+      );
+      // If the request is successful, update the component's state with the data returned from the API
+      this.setState({
+        data: response.data,
+      });
+    } catch (error) {
+      // If there's an error, log it to the console
+      console.log(error);
+    }
   };
 
-  // Render the component
+  // Render the component to the screen
   render() {
-    // Destructure the data from the state
+    // Destructure the "data" value from the component's state
     const { data } = this.state;
     return (
       <div>
         <header>
           <div className="container">
             {
-              // Display the information from the state if it exists
-               data ? (
+              // If there's data in the component's state, display it
+              data ? (
                 <Fragment>
                   <p> الاسم : {data.arabic_name} </p>
                   <p> الرقم القومي : {data.national_id} </p>
-                  <p> الكليه : {data.college} </p>
+                  <p> الكليه : {data.faculty} </p>
                   <p> الرقم الجامعي : {data.admin_id} </p>
                 </Fragment>
               ) : (
-                // Display a message if the data is not found
+                // If there's no data in the component's state, display a message
                 <p> Not found </p>
-              ) 
+              )
             }
           </div>
         </header>
@@ -51,5 +65,5 @@ class Admin extends Component {
   }
 }
 
-// Export the Admin component
+// Export the "Admin" component
 export default Admin;
