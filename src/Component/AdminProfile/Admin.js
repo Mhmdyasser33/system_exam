@@ -2,38 +2,31 @@
 import React, { Component, Fragment } from "react";
 import "./Admin.css";
 import axios from "axios";
-
-// Define a React component called "Admin"
 class Admin extends Component {
-  // Set the initial state with empty values for "id", "secretNumber", and "data"
   state = {
-    id: "",
-    secretNumber: "",
+    idValue: this.props.idValue,
+    secretNumValue: this.props.secretNumValue,
     data: null,
   };
 
-  // Handle the form submission when the user clicks the "submit" button
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    // Destructure the "id" and "secretNumber" values from the component's state
-    const { id, secretNumber } = this.state;
+  componentDidMount = async (e) => {
+    const { idValue, secretNumValue } = this.state;
+    const { id, secretNum } = this.props;
     try {
-      // Send a POST request to the API endpoint with the user's "id" and "secretNumber" values
       const response = await axios.post(
         "http://127.0.0.1:3000/v0/admin/login",
         {
-          id: id,
-          secretNumber: secretNumber,
+          national_id: id,
+          password: secretNum,
         }
       );
-      // If the request is successful, update the component's state with the data returned from the API
       this.setState({
         data: response.data,
       });
     } catch (error) {
-      // If there's an error, log it to the console
       console.log(error);
     }
+    //};
   };
 
   // Render the component to the screen

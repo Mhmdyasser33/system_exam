@@ -7,56 +7,36 @@ import axios from "axios";
 class Student extends Component {
   // state to store student data
   state = {
-    id: "",
-    secretNumber: "",
     data: null,
   };
 
   // Set the token in local storage on component mount
-  componentDidMount() {
-    // Set the token as a string in the local storage of the browser
-    // for use it in any Api Resquest later 
-    localStorage.setItem(
-      "Std_Token",
-      "$2b$10$7a1dsfubQXr1X6wWFjAtnulZlnGC.MX/Wj8Te6h4skGLDdF08OaDC"
-    );
-  }
-
-  // Handle form submit and fetch student data using axios
-  handleSubmit = async (e) => {
-    // Prevent the default form submission behavior
-    e.preventDefault();
-    // Destructure the state for easier access to the student's ID and secret number
-    const { id, secretNumber } = this.state;
-    // Get the token from local storage
-    const Token = localStorage.getItem("Token");
-    try {
-      // Make a POST request to the API with the student's ID and secret number
-      // in the request body
-      const response = await axios.post(
-        "http://127.0.0.1:3000/v0/student/login",
-        {
-          id: id,
-          secretNumber: secretNumber,
-        },
-        // Include the token in the headers for authorization
-        {
-          headers: {
-            Authorization: `Bearer ${Token}`,
-          },
+  componentDidMount = async() => {
+    localStorage.setItem('token' , '$2b$10$7a1dsfubQXr1X6wWFjAtnulZlnGC.MX/Wj8Te6h4skGLDdF08OaDC')
+    console.log(this.props.id);
+    console.log(this.props.secretNum)
+    const {id, secretNum} = this.props ; 
+    const Token = localStorage.getItem('token') 
+    try{
+    const response = await axios.post(
+      "http://127.0.0.1:3000/v0/student/login",
+      {
+        national_id: id,
+        password: secretNum,
+      }  , 
+      {
+        headers :{
+          Authorization : `Bearer ${Token}`
         }
-      );
-      // Update the state with the student data from the response
-      this.setState({
-        data: response.data,
-      });
-    } catch (error) {
-      // Handle any errors that may occur and log them to the console
-      console.log(error);
+      }  
+  );
+  this.setState({
+    data: response.data,
+  }) ; 
+    }catch(error){
+      console.log(error) 
     }
   };
-
-  // Render the student information on the page
   render() {
     // Destructuring the state
     const { data } = this.state;
