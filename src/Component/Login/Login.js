@@ -1,89 +1,78 @@
-import React, { Component , useState} from "react";
-import "./Login.css";
-// Login component to render login form and handle login functionality
-class Login extends Component {
-     getInputValue = (e) =>{
-console.log(`the value entered by user is  ${e.target.value}`);
-     }
-  // handleSubmit function to handle the submit event of the form
-  handleSubmit = (e) => {
-    e.preventDefault();
-    // get the values of the inputs
-    const input1 = document.getElementById("id_input").value;
-    const input2 = document.getElementById("secretNum_input").value;
-    // call handleLogin function 
-    this.props.handleLogin(input1 , input2 ) ; 
-    
-    // check if both inputs are filled
-    if (!input1 && !input2) {
-      alert("ID and SecretNum fields are required!");
-    }
-    // check if the first input is filled
-    else if (!input1) {
-      alert("id field is required!");
-      return;
-    }
-    // check if the second input is filled
-    else if (!input2) {
-      alert("secretNumber field is required!");
-      return;
-    }
-    // get the selected user type
-    const selectedUserType = document.querySelector(
-      'input[name="user_type"]:checked'
-    );
-    // check the selected user type and call the handleType function from the parent component if the inputs are filled
-    if (
-      selectedUserType &&
-      selectedUserType.value === "student" &&
-      input1 !== "" &&
-      input2 !== ""
-    ) {
-      //redirect("/student", { input1, input2 });
-      this.props.handleType("Student", input1, input2);
-    } else if (
-      selectedUserType &&
-      selectedUserType.value === "admin" &&
-      input1 !== "" &&
-      input2 !== ""
-    ) {
-      this.props.handleType("Admin", input1, input2);
-    }
-  };
+            // Import necessary modules and libraries
+            import React from "react";
+            import "./Login.css"
 
-  render() {
-   
-    return (
-      // render the login form
-      
-      <form onSubmit={this.handleSubmit} >
-        <h3 className="login"> التسجيل </h3>
-        <input
-          type="password"
-          className="password"
-          id="id_input"
-          placeholder="الرقم القومي "
-           />
-        <input
-          type="password"
-          className="password"
-          id="secretNum_input"
-          placeholder="الرقم السري "
-         
-        />
-        <br></br>
-        <button className="btn" id="btn">
-          تسجيل
-        </button>
-        <div className="radio_btn_Container">
-          <input type="radio" name="user_type" id="student" value="student" />
-          <label htmlFor="student"> طالب </label>
-          <input type="radio" name="user_type" id="admin" value="admin" />
-          <label htmlFor="admin"> أدمن </label>
-        </div>
-      </form>
-    );
-  }
-}
+            // Define the Login functional component
+            const Login = (props) => {
+            // Define a function to handle form submission
+            const handleSubmit = (e) => {
+            e.preventDefault(); // prevent the form from submitting
+            // Get the values from the input fields
+            const input1 = document.getElementById("id_input").value;
+            const input2 = document.getElementById("secretNum_input").value;
+            // Call the handleLogin function passed down from the parent component
+            props.handleLogin(input1, input2);
+            // Validate the input fields
+            if (!input1 && !input2) {
+            alert("ID and SecretNum fields are required!");
+            } else if (!input1) {
+            alert("id field is required!");
+            return;
+            } else if (!input2) {
+            alert("secretNumber field is required!");
+            return;
+            }
+            // Get the selected user type radio button
+            const selectedUserType = document.querySelector(
+              'input[name="user_type"]:checked'
+            );
+            // Call the handleType function based on the selected user type
+            if (
+              selectedUserType &&
+              selectedUserType.value === "student" &&
+              input1 !== "" &&
+              input2 !== ""
+            ) {
+              props.handleType("Student", input1, input2);
+            } else if (
+              selectedUserType &&
+              selectedUserType.value === "admin" &&
+              input1 !== "" &&
+              input2 !== ""
+            ) {
+              props.handleType("Admin", input1, input2);
+            }
+            };
 
-export default Login;
+            // Render the Login component
+            return (
+            <form onSubmit={handleSubmit}>
+            <h3 className="login"> التسجيل </h3>
+            <input
+                type="password"
+                className="password"
+                id="id_input"
+                placeholder="الرقم القومي "
+              />
+            <input
+                type="password"
+                className="password"
+                id="secretNum_input"
+                placeholder="الرقم السري "
+              />
+            <br></br>
+            <button className="btn" id="btn">
+            تسجيل
+            </button>
+            <div className="radio_btn_Container">
+            <input type="radio" name="user_type" id="student" value="student" />
+            <label htmlFor="student"> طالب </label>
+            <input type="radio" name="user_type" id="admin" value="admin" />
+            <label htmlFor="admin"> أدمن </label>
+            </div>
+            </form>
+            );
+            };
+
+            // Export the Login component
+            export default Login;
