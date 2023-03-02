@@ -1,55 +1,66 @@
-            // Import the necessary modules and libraries
-            import { useState, useEffect } from "react";
-            import "./Admin.css";
-            import axios from "axios";
+import { useState, useEffect } from "react";
+import "./Admin.css";
+import Login from "../Login/Login";
+import axios from "axios";
 
-            // Define the "Admin" component
-            const Admin = ({ id, secretNum, idValue, secretNumValue }) => {
-              if(idValue !== id || secretNumValue !==secretNum){
-                window.alert("youe ID or secretNum is incorrect") ; 
-              }
-            // Define the component's state using the "useState" hook
-            const [data, setData] = useState(null);
-            // Use the "useEffect" hook to make an API call when the component mounts
-            useEffect(() => {
-            const fetchData = async () => {
-            try {
-            const response = await axios.post(
-            "http://127.0.0.1:3000/v0/admin/login",
-            {
+const Admin = ({ id, secretNum, handleType, handleLogin }) => {
+  // Define the component's state using the "useState" hook
+  const [data, setData] = useState(null);
+  const [showLogin , setShowLogin] = useState(false) ; 
+  const [ErrorShow , setErrorShow] = useState(false) ;
+  const [error, setError] = useState(null);
+
+  // Use the "useEffect" hook to send an API request to retrieve the admin data
+  useEffect(() => {
+    // Send a POST request to the server to retrieve the admin data
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:3000/v0/admin/login",
+          {
             national_id: id,
             password: secretNum,
-            }
-            );
-            setData(response.data);
-            } catch (error) {
-            console.log(error);
-            }
-            };
-            fetchData();
-            }, [id, secretNum]);
+          }
+        );
+        // Set the component's state with the retrieved admin data
+        setData(response.data);
+        setShowLogin(false) ; 
+      } catch (error) {
+        setError(error);
+      }
+    };
+    fetchData();
+  }, [id, secretNum]);
 
-            // Render the component to the screen
-            return (
-            <div>
-            <header>
-            <div className="container">
-            {
-            // If there's data in the component's state, display it
-            data && (
+  // If an error occurred during the API request, show an error message and the login component
+  if ( error && !ErrorShow){
+    setErrorShow(true) ; 
+    alert("There was an error in the ID or secret number");
+    setShowLogin(true) ; 
+  }
+
+  // If the "showLogin" state is true, show the login component
+  if(showLogin){
+    return <Login handleType = {handleType} handleLogin = {handleLogin}/>
+  }
+
+  // Render the admin data if it has been retrieved
+  return (
+    <div>
+      <header>
+        <div className="container">
+          {data && (
             <>
-            <p> الاسم : {data.arabic_name} </p>
-            <p> الرقم القومي : {data.national_id} </p>
-            <p> الكليه : {data.faculty} </p>
-            <p> الرقم الجامعي : {data.admin_id} </p>
+              <p> الاسم : {data.arabic_name} </p>
+              <p> الرقم القومي : {data.national_id} </p>
+              <p> الكليه : {data.faculty} </p>
+              <p> الرقم الجامعي : {data.admin_id} </p>
             </>
-            )
-            }
-              </div>
-              </header>
-            </div>
-            );
-            };
+          )}
+        </div>
+      </header>
+    </div>
+  );
+};
 
-            // Export the "Admin" component
-            export default Admin;
+export default Admin;

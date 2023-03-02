@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from "react";
 import "./Student.css";
+import Login from "../Login/Login";
 import axios from "axios";
 
-const Student = (props) => {
+const Student = ({ handleType, handleLogin, id, secretNum }) => {
   // Define the component's state using the "useState" hook
   const [data, setData] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
+  const [ErrorShow, setErrorShow] = useState(false);
+  const [error, setError] = useState(null);
 
   // Use the "useEffect" hook to send an API request to retrieve the student data
   useEffect(() => {
-    // Set a token in local storage to authorize the API request
-    localStorage.setItem(
-      "token",
-      "$2b$10$7a1dsfubQXr1X6wWFjAtnulZlnGC.MX/Wj8Te6h4skGLDdF08OaDC"
-    );
-    // Retrieve the student's national ID and secret number from props
-    const { id, secretNum } = props;
-    // Retrieve the token from local storage to include in the API request headers
-    const token = localStorage.getItem("token");
     // Send a POST request to the server to retrieve the student data
     axios
-      .post(
-        "http://127.0.0.1:3000/v0/student/login",
-        {
-          national_id: id,
-          password: secretNum,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post("http://127.0.0.1:3000/v0/student/login", {
+        national_id: id,
+        password: secretNum,
+      })
       .then((response) => {
         // Set the component's state with the retrieved student data
         setData(response.data);
+        setShowLogin(false);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error);
       });
-  }, [props.id, props.secretNum]);
+  }, [id, secretNum]);
+
+  // Check for errors and show login page if needed
+  if (error && !ErrorShow) {
+    setErrorShow(true);
+    alert("There was an error in the ID or secret number");
+    setShowLogin(true);
+  }
+
+  // Render the login page if showLogin state is true
+  if (showLogin) {
+    return <Login handleType={handleType} handleLogin={handleLogin} />;
+  }
 
   // Render the student data if it has been retrieved
   return (
@@ -52,7 +52,7 @@ const Student = (props) => {
               <p> الكليه : {data.faculty} </p>
               <p> الكود الجامعي : {data.university_id} </p>
             </React.Fragment>
-          ) }
+          )}
         </div>
       </header>
     </div>
